@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doodle Recognition</title>
+    <style>
+        @font-face {
+            font-family: 'ArcadeClassic';
+            src: url('{{ url_for("static", filename="ARCADECLASSIC.TTF") }}') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'ArcadeClassic', Arial, sans-serif;
+            background-color: #1E1E2E;
+            color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row; /* Align items in a row */
+            align-items: center;
+            justify-content: center;
+            background: #282A36;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+            width: 350px; /* Default size */
+            height: 400px;
+            text-align: center;
+        }
+
+        .expanded {
+            width: 650px; /* Expands when predictions appear */
+            height: 400px;
+        }
+
+        .drawing-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the canvas */
+            justify-content: center;
+            width: 100%;
+        }
+
+        canvas {
+            display: block;
+            border: 2px solid #ccc;
+            background: black;
+            cursor: crosshair;
+        }
+
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Adds space between buttons */
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 1em;
+            font-family: 'ArcadeClassic', Arial, sans-serif;
+            background: #44475A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #6272A4;
+        }
+
+
+        .prediction-container {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 250px;
+            height: 380px;
+            overflow-y: auto;
+            padding-left: 20px;
+            /*border-left: 2px solid #ccc;*/
+        }
+
+        /* Scrollbar Styling */
+        .prediction-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .prediction-container::-webkit-scrollbar-thumb {
+            background-color: #6272A4;
+            border-radius: 4px;
+        }
+
+
+        .prediction-container h2 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .prediction-results {
+            display: flex;
+            flex-direction: column;
+            font-size: 1em;
+        }
+
+        .prediction-results strong {
+            color: #50FA7B;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="main-container">
+    <!-- Left: Drawing Area -->
+    <div class="drawing-area">
+        <canvas id="canvas" width="280" height="280"></canvas>
+        <br>
+        <div class="button-container">
+            <button id="clearBtn">CLEAR</button>
+            <button id="predictBtn">PREDICT</button>
+        </div>
+    </div>
+
+    <!-- Right: Predictions -->
+    <div class="prediction-container" id="prediction-container">
+        <h2>PREDICTIONS</h2>
+        <div class="prediction-results" id="prediction"></div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
